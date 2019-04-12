@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const copyModule = require("copy-paste-win32fix");
-const fileIndexer = require("./fileIndexer");
+const copyModule = require('copy-paste-win32fix');
+const fileIndexer = require('./fileIndexer');
 
 module.exports = pluginContext => {
     const app = pluginContext.app;
@@ -10,13 +10,15 @@ module.exports = pluginContext => {
 
     function setIndexerByFiles(fileList) {
         logger.log(fileList);
-        indexer.set("/Users/sungjungjo/peoplefund/dev", fileList);
+        indexer.set('/Users/sungjungjo/peoplefund/dev', fileList);
     }
 
     function startup() {
-        logger.log("doing preparation");
+        logger.log('doing preparation');
         logger.log(typeof fileIndexer);
-        fileIndexer("/Users/sungjungjo/peoplefund/dev").then(setIndexerByFiles);
+        fileIndexer('/Users/sungjungjo/peoplefund/dev', logger.log).then(
+            setIndexerByFiles
+        );
     }
 
     function execute(filePath, payload, extra) {
