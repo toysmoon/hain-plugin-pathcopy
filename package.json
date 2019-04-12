@@ -1,0 +1,18 @@
+{
+    "name": "hain-plugin-path",
+    "version": "1.0.0",
+    "description": "Hain Plugin for Path Copy",
+    "main": "index.js",
+    "keywords": [
+        "hain-0.1.0"
+    ],
+    "scripts": {},
+    "author": "Sungjung Jo",
+    "license": "MIT",
+    "hain": {
+        "prefix": "/path ",
+        "usage": "/path fileName",
+        "group": "File Path"
+    },
+    "dependencies": {}
+}
