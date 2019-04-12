@@ -27,7 +27,7 @@ async function getFileList(directoryPath) {
         isDirectory
             ? disableFileList.push(file)
             : enableFileList.push({
-                  id: file,
+                  id: path,
                   primaryText: file,
                   secondaryText: path,
                   group: "File Path Copy"
