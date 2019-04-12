@@ -1,9 +1,10 @@
 "use strict";
 
+const copyModule = require("copy-paste-win32fix");
 const fileIndexer = require("./fileIndexer");
 
 module.exports = pluginContext => {
-    const toast = pluginContext.toast;
+    const app = pluginContext.app;
     const logger = pluginContext.logger;
     const indexer = pluginContext.indexer;
 
@@ -18,9 +19,11 @@ module.exports = pluginContext => {
         fileIndexer("/Users/sungjungjo/peoplefund/dev").then(setIndexerByFiles);
     }
 
-    function execute(id, payload, extra) {
-        logger.log(extra);
-        toast.enqueue(`${payload}, ${id} and ${extra} was excute`);
+    function execute(filePath, payload, extra) {
+        logger.log(filePath);
+        copyModule.copy(filePath, () => {
+            app.close();
+        });
     }
 
     return { startup, execute };

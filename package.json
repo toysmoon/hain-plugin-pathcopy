@@ -14,5 +14,7 @@
         "usage": "/path fileName",
         "group": "File Path"
     },
-    "dependencies": {}
+    "dependencies": {
+        "copy-paste-win32fix": "^1.4.0"
+    }
 }
