@@ -1,12 +1,13 @@
 const fs = require('./fsWithPromise');
+const icon = require('./setting/icon.json');
 
-async function getFileList(directoryPath, logger) {
+async function getFileList(directoryPath) {
     // blacklist
     const blackList = {
         '.git': true
     };
 
-    const fileList = await fs.readdir(directoryPath, logger);
+    const fileList = await fs.readdir(directoryPath);
     let enableFileList = [];
     let disableFileList = [];
 
@@ -18,6 +19,7 @@ async function getFileList(directoryPath, logger) {
     for (let i = 0; i < isDirectoryList.length; i++) {
         const isDirectory = await isDirectoryList[i];
         const file = fileList[i];
+        const splitFile = file.split('.');
         const path = directoryPath + '/' + file;
         if (blackList[file]) {
             continue;
@@ -30,7 +32,9 @@ async function getFileList(directoryPath, logger) {
                   primaryText: file,
                   secondaryText: path,
                   group: 'File Path Copy',
-                  icon: ''
+                  icon:
+                      icon[splitFile[splitFile.length - 1]] ||
+                      '#fas fa-file-code'
               });
     }
 
