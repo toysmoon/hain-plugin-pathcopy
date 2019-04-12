@@ -2,30 +2,34 @@
 
 const copyModule = require('copy-paste-win32fix');
 const fileIndexer = require('./fileIndexer');
+const pathList = require('./setting/target.json');
 
 module.exports = pluginContext => {
     const app = pluginContext.app;
+    const shell = pluginContext.shell;
     const logger = pluginContext.logger;
     const indexer = pluginContext.indexer;
 
-    function setIndexerByFiles(fileList) {
-        logger.log(fileList);
-        indexer.set('/Users/sungjungjo/peoplefund/dev', fileList);
-    }
-
     function startup() {
         logger.log('doing preparation');
-        logger.log(typeof fileIndexer);
-        fileIndexer('/Users/sungjungjo/peoplefund/dev', logger.log).then(
-            setIndexerByFiles
-        );
+        pathList.forEach(path => {
+            logger.log(path);
+            fileIndexer(path).then(fileList => {
+                indexer.set(path, fileList);
+            });
+        });
     }
 
     function execute(filePath, payload, extra) {
-        logger.log(filePath);
         copyModule.copy(filePath, () => {
+            if (extra.keys.metaKey) {
+                shell.showItemInFolder(filePath);
+            } else if (extra.keys.shiftKey) {
+                shell.openItem(filePath);
+            }
             app.close();
         });
+        logger.log(extra);
     }
 
     return { startup, execute };
